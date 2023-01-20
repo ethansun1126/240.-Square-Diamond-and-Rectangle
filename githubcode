@@ -4,16 +4,23 @@
 int main(){
     int x;
     scanf("%d",&x);
-    int a[8 * x];
+    double a[8 * x];
     for (int i = 0; i < 8 * x; i++)
-        scanf("%d", &(a[i]));
+        scanf("%lf", &(a[i]));
     for (int i = 0; i < 8 * x; i += 8)
     {
         #if 0
+        int ab = ((a[i] - a[i + 2]) * (a[i + 1] - a[i + 5]) - (a[i] - a[i + 4]) * (a[i + 1] - a[i + 3]));
+        int ac = ((a[i] - a[i + 2]) * (a[i + 1] - a[i + 7]) - (a[i] - a[i + 6]) * (a[i + 1] - a[i + 3]));
+        int cb = ((a[i] - a[i + 6]) * (a[i + 1] - a[i + 5]) - (a[i + 1] - a[i + 7]) * (a[i] - a[i + 4]));
+        printf("%d\n",ab);
+        printf("%d\n",ac);
+        printf("%d\n",cb);
+        #endif
     
         if (((a[i] - a[i + 2]) * (a[i + 1] - a[i + 5]) - (a[i] - a[i + 4]) * (a[i + 1] - a[i + 3])) * ((a[i] - a[i + 2]) * (a[i + 1] - a[i + 7]) - (a[i] - a[i + 6]) * (a[i + 1] - a[i + 3])) < 0)
         {
-            printf("cond1");
+            //printf("cond1");
             int tempx = a[i + 2];
             a[i + 2] = a[i + 4];
             a[i + 4] = tempx;
@@ -23,53 +30,7 @@ int main(){
         }
         else if (((a[i] - a[i + 6]) * (a[i + 1] - a[i + 5]) - (a[i + 1] - a[i + 7]) * (a[i] - a[i + 4])) * ((a[i] - a[i + 6]) * (a[i + 1] - a[i + 3]) - (a[i + 1] - a[i + 7]) * (a[i] - a[i + 2])) < 0)
         {
-            printf("cond2");
-            int tempx = a[i + 6];
-            a[i + 6] = a[i + 4];
-            a[i + 4] = tempx;
-            int tempy = a[i + 7];
-            a[i + 7] = a[i + 5];
-            a[i + 5] = tempy;
-        }
-        #endif
-
-        bool ab = (((a[i] - a[i + 2]) * (a[i + 1] - a[i + 5]) - (a[i] - a[i + 4]) * (a[i + 1] - a[i + 3])) > 0);
-        bool ac = (((a[i] - a[i + 2]) * (a[i + 1] - a[i + 7]) - (a[i] - a[i + 6]) * (a[i + 1] - a[i + 3])) > 0);
-        bool cb = (((a[i] - a[i + 6]) * (a[i + 1] - a[i + 5]) - (a[i + 1] - a[i + 7]) * (a[i] - a[i + 4])) > 0);
-
-        if (ab == true && ac == true && cb == true)
-        {
-            int tempx = a[i + 6];
-            a[i + 6] = a[i + 4];
-            a[i + 4] = tempx;
-            int tempy = a[i + 7];
-            a[i + 7] = a[i + 5];
-            a[i + 5] = tempy;
-        }
-        // 一樣if (ab == true && ac == true && cb == false)
-        if (ab == true && ac == false && cb == true)
-        {
-            int tempx = a[i + 2];
-            a[i + 2] = a[i + 4];
-            a[i + 4] = tempx;
-            int tempy = a[i + 3];
-            a[i + 3] = a[i + 5];
-            a[i + 5] = tempy;
-        }
-        //if (ab == false && ac == true && cb == true)
-        //if (ab == true && ac == false && cb == false)
-        if (ab == false && ac == true && cb == false)
-        {
-            int tempx = a[i + 2];
-            a[i + 2] = a[i + 4];
-            a[i + 4] = tempx;
-            int tempy = a[i + 3];
-            a[i + 3] = a[i + 5];
-            a[i + 5] = tempy;
-        }
-        //if (ab == false && ac == false && cb == true)
-        if (ab == false && ac == false && cb == false)
-        {
+            //printf("cond2");
             int tempx = a[i + 6];
             a[i + 6] = a[i + 4];
             a[i + 4] = tempx;
@@ -81,10 +42,10 @@ int main(){
         int bb = (a[i + 2] - a[i + 4]) * (a[i + 2] - a[i + 4]) + (a[i + 3] - a[i + 5]) * (a[i + 3] - a[i + 5]);
         int cc = (a[i + 4] - a[i + 6]) * (a[i + 4] - a[i + 6]) + (a[i + 5] - a[i + 7]) * (a[i + 5] - a[i + 7]);
         int dd = (a[i + 6] - a[i])     * (a[i + 6] - a[i])     + (a[i + 7] - a[i + 1]) * (a[i + 7] - a[i + 1]);
-        //協對角線 畢氏定理(? 此處無用
+
         int ee = (a[i]     - a[i + 4]) * (a[i]     - a[i + 4]) + (a[i + 1] - a[i + 5]) * (a[i + 1] - a[i + 5]);
         int ff = (a[i + 2] - a[i + 6]) * (a[i + 2] - a[i + 6]) + (a[i + 3] - a[i + 7]) * (a[i + 3] - a[i + 7]);
-        //內積
+
         int e =  (a[i]     - a[i + 2]) * (a[i + 2] - a[i + 4]) + (a[i + 1] - a[i + 3]) * (a[i + 3] - a[i + 5]);
         int f =  (a[i + 2] - a[i + 4]) * (a[i + 4] - a[i + 6]) + (a[i + 3] - a[i + 5]) * (a[i + 5] - a[i + 7]);
         int g =  (a[i + 4] - a[i + 6]) * (a[i + 6] - a[i])     + (a[i + 5] - a[i + 7]) * (a[i + 7] - a[i + 1]);
@@ -115,3 +76,4 @@ int main(){
     }
     return 0;
 }
+   
